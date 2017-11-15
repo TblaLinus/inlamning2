@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="APIClient.cs" />
     <Compile Include="FriendOrganizerDbContext.cs" />
+    <Compile Include="IAPIClient.cs" />
     <Compile Include="Migrations\201710301027062_InitialDataBase.cs" />
     <Compile Include="Migrations\201710301027062_InitialDataBase.Designer.cs">
       <DependentUpon>201710301027062_InitialDataBase.cs</DependentUpon>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
 using FriendOrganizer.UI.Event;
+using FriendOrganizer.DataAccess;
 
 namespace FriendOrganizer.UI.ViewModel
 {
@@ -21,11 +22,15 @@ namespace FriendOrganizer.UI.ViewModel
         private Friend _selectedAvailableFriend;
         private Friend _selectedAddedFriend;
         private List<Friend> _allFriends;
+        private IAPIClient _APIClient;
+        private Weather _weather;
 
         public MeetingDetailViewModel(IEventAggregator eventAggregator,
+            IAPIClient APIClient,
             IMessageDialogService messageDialogService,
             IMeetingRepository meetingRepository) : base(eventAggregator, messageDialogService)
         {
+            _APIClient = APIClient;
             _meetingRepository = meetingRepository;
             eventAggregator.GetEvent<AfterDetailSavedEvent>().Subscribe(AfterDetailSaved);
             eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
@@ -89,6 +94,8 @@ namespace FriendOrganizer.UI.ViewModel
             _allFriends = await _meetingRepository.GetAllFriendsAsync();
 
             SetupPicklist();
+
+            _weather = await _APIClient.RunAsync();
         }
 
         protected async override void OnDeleteExecute()

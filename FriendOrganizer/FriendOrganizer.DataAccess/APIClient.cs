@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace FriendOrganizer.DataAccess
 {
-    public static class APIClient
+    public class APIClient : IAPIClient
     {
-        static HttpClient httpClient = new HttpClient();
+        public HttpClient httpClient = new HttpClient();
 
-        public static async Task RunAsync()
+        public async Task<Weather> RunAsync()
         {
             //https://www.metaweather.com/api/location/44418/
 
@@ -22,10 +22,10 @@ namespace FriendOrganizer.DataAccess
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             Weather weather = await GetWeatherAsync("location/44418/");
-
+            return weather;
         }
 
-        static async Task<Weather> GetWeatherAsync(string path)
+        private async Task<Weather> GetWeatherAsync(string path)
         {
             Weather weather = null;
             HttpResponseMessage response = await httpClient.GetAsync(path);

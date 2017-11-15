@@ -15,6 +15,7 @@ namespace FriendOrganizer.UI.StartUp
             var builder = new ContainerBuilder();
 
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+            builder.RegisterType<APIClient>().As<IAPIClient>().SingleInstance();
 
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
 
