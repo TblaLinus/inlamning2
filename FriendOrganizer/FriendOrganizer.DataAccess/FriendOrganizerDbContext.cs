@@ -13,7 +13,6 @@ namespace FriendOrganizer.DataAccess
     {
         public FriendOrganizerDbContext() : base("FriendOrganizerDb")
         {
-
         }
 
         public DbSet<Friend> Friends { get; set; }
