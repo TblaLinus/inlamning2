@@ -51,6 +51,12 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
+        public Weather Weather
+        {
+            get { return _weather; }
+            set { _weather = value; }
+        }
+
         public ICommand AddFriendCommand { get; }
 
         public ICommand RemoveFriendCommand { get; }

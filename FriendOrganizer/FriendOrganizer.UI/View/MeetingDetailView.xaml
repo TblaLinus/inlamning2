@@ -16,6 +16,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -28,7 +30,10 @@
         <Label Grid.Row="4" Content="End" Margin="10 0"/>
         <toolkit:DateTimePicker Grid.Row="5" Value="{Binding Meeting.DateTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Grid Grid.Row="6">
+        <Label Grid.Row="6" Content="Weather" Margin="10 0"/>
+        <TextBlock Grid.Row="7" Text="{Binding Weather.weather_state_name}" Margin="10 0"/>
+
+        <Grid Grid.Row="8">
             <Grid.Resources>
                 <DataTemplate DataType="{x:Type model:Friend}">
                     <TextBlock>
@@ -62,7 +67,7 @@
 
         </Grid>
         
-        <StackPanel Grid.Row="7" Orientation="Horizontal">
+        <StackPanel Grid.Row="9" Orientation="Horizontal">
             <Button Content="Save" Width="75" Margin="10" Command="{Binding SaveCommand}"/>
             <Button Content="Delete" Width="75" Margin="10" Command="{Binding DeleteCommand}"/>
         </StackPanel>

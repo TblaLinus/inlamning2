@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using FriendOrganizer.UI.Data.Lookups;
+using System.Collections.Generic;
 
 namespace FriendOrganizer.UI.ViewModel
 {
@@ -31,7 +32,9 @@ namespace FriendOrganizer.UI.ViewModel
 
         public async Task LoadAsync()
         {
-            var lookup = await _friendLookupService.GetFriendLookupAsync();
+            IEnumerable<LookupItem> lookup = null;
+            await System.Threading.Tasks.Task.Run(async () =>
+            lookup = await _friendLookupService.GetFriendLookupAsync());
             Friends.Clear();
             foreach (var item in lookup)
             {
