@@ -44,6 +44,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding Weather.applicable_date}" FontSize="14" HorizontalAlignment="Center"/>
+            <Image Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Source="../Resources/snow.png" Height="40"/>
             <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Weather.weather_state_name}" FontSize="12" HorizontalAlignment="Center"/>
             <Label Grid.Row="3" Grid.Column="0" Content="Min" FontSize="10" HorizontalAlignment="Center"/>
             <Label Grid.Row="3" Grid.Column="1" Content="Max" FontSize="10" HorizontalAlignment="Center"/>
