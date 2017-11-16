@@ -19,6 +19,7 @@ namespace FriendOrganizer.DataAccess
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            //location/890869 == Gothenburg
             Weather weather = await GetWeatherAsync($"location/890869/{dateTime.Year}/{dateTime.Month}/{dateTime.Day}/");
             return weather;
         }

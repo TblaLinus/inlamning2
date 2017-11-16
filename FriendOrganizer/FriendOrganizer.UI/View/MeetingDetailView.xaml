@@ -31,12 +31,25 @@
         <toolkit:DateTimePicker Grid.Row="5" Value="{Binding Meeting.DateTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="6" Content="Weather" Margin="10 0"/>
-        <StackPanel Grid.Row="7" Orientation="Horizontal">
-            <TextBlock Text="{Binding Weather.applicable_date}" Margin="10 0"/>
-            <TextBlock Text="{Binding Weather.weather_state_name}" Margin="10 0"/>
-            <TextBlock Text="{Binding Weather.min_temp}" Margin="10 0"/>
-            <TextBlock Text="{Binding Weather.max_temp}" Margin="10 0"/>
-        </StackPanel>
+        <Grid Grid.Row="7" Width="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding Weather.applicable_date}" FontSize="14" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Weather.weather_state_name}" FontSize="12" HorizontalAlignment="Center"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Min" FontSize="10" HorizontalAlignment="Center"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="Max" FontSize="10" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Weather.min_temp}" FontSize="14" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Weather.max_temp}" FontSize="14" HorizontalAlignment="Center"/>
+        </Grid>
 
 
         <Grid Grid.Row="8">
