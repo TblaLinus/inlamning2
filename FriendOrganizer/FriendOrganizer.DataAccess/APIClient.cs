@@ -12,15 +12,14 @@ namespace FriendOrganizer.DataAccess
 {
     public class APIClient : IAPIClient
     {
-        public HttpClient httpClient = new HttpClient();
+        public HttpClient httpClient = new HttpClient { BaseAddress = new Uri("https://www.metaweather.com/api/") };
 
-        public async Task<Weather> RunAsync()
+        public async Task<Weather> RunAsync(DateTime dateTime)
         {
-            httpClient.BaseAddress = new Uri("https://www.metaweather.com/api/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            Weather weather = await GetWeatherAsync("location/44418/2013/4/27/");
+            Weather weather = await GetWeatherAsync($"location/890869/{dateTime.Year}/{dateTime.Month}/{dateTime.Day}/");
             return weather;
         }
 

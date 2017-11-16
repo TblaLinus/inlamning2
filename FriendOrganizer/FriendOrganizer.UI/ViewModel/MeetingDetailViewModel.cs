@@ -23,7 +23,7 @@ namespace FriendOrganizer.UI.ViewModel
         private Friend _selectedAddedFriend;
         private List<Friend> _allFriends;
         private IAPIClient _APIClient;
-        private Weather _weather;
+        private WeatherWrapper _weather;
 
         public MeetingDetailViewModel(IEventAggregator eventAggregator,
             IAPIClient APIClient,
@@ -51,7 +51,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public Weather Weather
+        public WeatherWrapper Weather
         {
             get { return _weather; }
             set { _weather = value; }
@@ -101,7 +101,7 @@ namespace FriendOrganizer.UI.ViewModel
 
             SetupPicklist();
 
-            _weather = await _APIClient.RunAsync();
+            _weather = new WeatherWrapper(await _APIClient.RunAsync(Meeting.DateFrom));
         }
 
         protected async override void OnDeleteExecute()

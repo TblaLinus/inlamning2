@@ -31,7 +31,13 @@
         <toolkit:DateTimePicker Grid.Row="5" Value="{Binding Meeting.DateTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="6" Content="Weather" Margin="10 0"/>
-        <TextBlock Grid.Row="7" Text="{Binding Weather.weather_state_name}" Margin="10 0"/>
+        <StackPanel Grid.Row="7" Orientation="Horizontal">
+            <TextBlock Text="{Binding Weather.applicable_date}" Margin="10 0"/>
+            <TextBlock Text="{Binding Weather.weather_state_name}" Margin="10 0"/>
+            <TextBlock Text="{Binding Weather.min_temp}" Margin="10 0"/>
+            <TextBlock Text="{Binding Weather.max_temp}" Margin="10 0"/>
+        </StackPanel>
+
 
         <Grid Grid.Row="8">
             <Grid.Resources>
