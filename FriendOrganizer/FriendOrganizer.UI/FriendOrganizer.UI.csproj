@@ -123,6 +123,7 @@
     <Compile Include="ViewModel\NavigationViewModel.cs" />
     <Compile Include="ViewModel\ProgrammingLanguageDetailViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\Converters\WeatherToImageURIConverter.cs" />
     <Compile Include="View\FriendDetailView.xaml.cs">
       <DependentUpon>FriendDetailView.xaml</DependentUpon>
     </Compile>
@@ -213,10 +214,5 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Resource Include="Resources\snow.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,8 +6,12 @@
              xmlns:local="clr-namespace:FriendOrganizer.UI.View"
              xmlns:model="clr-namespace:FriendOrganizer.Model;assembly=FriendOrganizer.Model"
              xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:FriendOrganizer.UI.View.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:WeatherToImageURIConverter x:Key="weatherToImageURIConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -21,7 +25,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="Title" Margin="10 10 10 0"/>
+        <Label Grid.Row="0" Content="Title" Margin="10 0"/>
         <TextBox Grid.Row="1" Text="{Binding Meeting.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="2" Content="Start" Margin="10 0"/>
@@ -43,13 +47,18 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding Weather.applicable_date}" FontSize="14" HorizontalAlignment="Center"/>
-            <Image Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Source="../Resources/snow.png" Height="40"/>
-            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Weather.weather_state_name}" FontSize="12" HorizontalAlignment="Center"/>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding Weather.applicable_date}" 
+                   FontSize="14" HorizontalAlignment="Center"/>
+            <Image Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="30"
+                   Source="{Binding Weather.weather_state_abbr, Converter={StaticResource weatherToImageURIConverter}}" />
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Weather.weather_state_name}" 
+                       FontSize="12" HorizontalAlignment="Center"/>
             <Label Grid.Row="3" Grid.Column="0" Content="Min" FontSize="10" HorizontalAlignment="Center"/>
             <Label Grid.Row="3" Grid.Column="1" Content="Max" FontSize="10" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Weather.min_temp}" FontSize="14" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Weather.max_temp}" FontSize="14" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Weather.min_temp}" 
+                       FontSize="14" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Weather.max_temp}" 
+                       FontSize="14" HorizontalAlignment="Center"/>
         </Grid>
 
 

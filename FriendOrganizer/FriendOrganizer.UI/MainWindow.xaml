@@ -58,12 +58,13 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Title}"/>
-                        <TextBlock Text="*" Visibility="{Binding HasChanges, Converter={StaticResource booleanToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding Title}" FontSize="16"/>
+                        <TextBlock Text="*" FontSize="16"
+                                   Visibility="{Binding HasChanges, Converter={StaticResource booleanToVisibilityConverter}}"/>
                         <Button Command="{Binding CloseDetailViewCommand}"
                                 Style="{StaticResource ChromelessButtonStyle}"
                                 VerticalContentAlignment="Top" Margin="2"
-                                Content="X" FontSize="20"/>
+                                Content="X" FontSize="16"/>
                     </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>
