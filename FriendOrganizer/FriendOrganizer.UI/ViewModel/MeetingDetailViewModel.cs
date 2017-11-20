@@ -100,11 +100,20 @@ namespace FriendOrganizer.UI.ViewModel
             _allFriends = await _meetingRepository.GetAllFriendsAsync();
 
             SetupPicklist();
+            await GetWeathers();
+        }
 
+        private async Task GetWeathers()
+        {
             _weathers = new List<WeatherWrapper>();
+            DateTime date = Meeting.DateFrom;
 
-            WeatherWrapper newWeather = new WeatherWrapper(await _APIClient.RunAsync(Meeting.DateFrom));
-            _weathers.Add(newWeather);
+            do
+            {
+                WeatherWrapper newWeather = new WeatherWrapper(await _APIClient.RunAsync(date));
+                _weathers.Add(newWeather);
+                date = date.AddDays(1);
+            } while (date <= Meeting.DateTo);
         }
 
         protected async override void OnDeleteExecute()
