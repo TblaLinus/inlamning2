@@ -19,8 +19,28 @@ namespace FriendOrganizer.UI.Wrapper
         public string applicable_date { get { return Model.applicable_date; } }
         private double NumMin { get { return Math.Round((double)Model.min_temp, 1); } }
         private double NumMax { get { return Math.Round((double)Model.max_temp, 1); } }
-        public string min_temp { get { return $"{NumMin.ToString()}°"; } }
-        public string max_temp { get { return $"{NumMax.ToString()}°"; } }
+        public string min_temp
+        {
+            get
+            {
+                if (weather_state_name == "forecast\nunavailable")
+                {
+                    return "-";
+                }
+                return $"{NumMin.ToString()}°";
+            }
+        }
+        public string max_temp
+        {
+            get
+            {
+                if (weather_state_name == "forecast\nunavailable")
+                {
+                    return "-";
+                }
+                return $"{NumMax.ToString()}°";
+            }
+        }
         public string ImageUrl { get { return "https://www.metaweather.com/static/img/weather/png/" + weather_state_abbr + ".png"; } }
     }
 }
