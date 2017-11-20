@@ -12,10 +12,12 @@ namespace FriendOrganizer.UI.Wrapper
 {
     public class MeetingWrapper : ModelWrapper<Meeting>
     {
+        private bool _updateChecker;
         protected readonly IEventAggregator EventAggregator;
 
         public MeetingWrapper(Meeting model, IEventAggregator eventAggregator) : base(model)
         {
+            _updateChecker = true;
             EventAggregator = eventAggregator;
         }
 
@@ -37,7 +39,11 @@ namespace FriendOrganizer.UI.Wrapper
                 {
                     DateTo = DateFrom;
                 }
-                EventAggregator.GetEvent<AfterDateUpdateEvent>().Publish(new AfterDateUpdateEventArgs { Id= Id});
+                else
+                {
+                    EventAggregator.GetEvent<AfterDateUpdateEvent>().Publish(new AfterDateUpdateEventArgs { Id = Id });
+                }
+
             }
         }
 
@@ -51,7 +57,10 @@ namespace FriendOrganizer.UI.Wrapper
                 {
                     DateFrom = DateTo;
                 }
-                EventAggregator.GetEvent<AfterDateUpdateEvent>().Publish(new AfterDateUpdateEventArgs { Id = Id });
+                else
+                {
+                    EventAggregator.GetEvent<AfterDateUpdateEvent>().Publish(new AfterDateUpdateEventArgs { Id = Id });
+                }
             }
         }
     }

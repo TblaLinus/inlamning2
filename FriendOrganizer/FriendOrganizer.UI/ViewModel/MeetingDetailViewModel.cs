@@ -104,7 +104,7 @@ namespace FriendOrganizer.UI.ViewModel
             _allFriends = await _meetingRepository.GetAllFriendsAsync();
 
             SetupPicklist();
-            _weathers = await GetWeathers();
+            Weathers = await GetWeathers();
         }
 
         private async Task<ObservableCollection<WeatherWrapper>> GetWeathers()
