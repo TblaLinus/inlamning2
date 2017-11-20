@@ -22,18 +22,22 @@ namespace FriendOrganizer.UI.ViewModel
         private Friend _selectedAvailableFriend;
         private Friend _selectedAddedFriend;
         private List<Friend> _allFriends;
+        private IEventAggregator _eventAggregator;
         private IAPIClient _APIClient;
-        private List<WeatherWrapper> _weathers;
+        private ObservableCollection<WeatherWrapper> _weathers;
 
         public MeetingDetailViewModel(IEventAggregator eventAggregator,
             IAPIClient APIClient,
             IMessageDialogService messageDialogService,
             IMeetingRepository meetingRepository) : base(eventAggregator, messageDialogService)
         {
+            _eventAggregator = eventAggregator;
             _APIClient = APIClient;
             _meetingRepository = meetingRepository;
+            _weathers = new ObservableCollection<WeatherWrapper>();
             eventAggregator.GetEvent<AfterDetailSavedEvent>().Subscribe(AfterDetailSaved);
             eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
+            eventAggregator.GetEvent<AfterDateUpdateEvent>().Subscribe(AfterDateUpdate);
 
             AddedFriends = new ObservableCollection<Friend>();
             AvailableFriends = new ObservableCollection<Friend>();
@@ -51,7 +55,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public List<WeatherWrapper> Weathers
+        public ObservableCollection<WeatherWrapper> Weathers
         {
             get { return _weathers; }
             set { _weathers = value; }
@@ -100,20 +104,21 @@ namespace FriendOrganizer.UI.ViewModel
             _allFriends = await _meetingRepository.GetAllFriendsAsync();
 
             SetupPicklist();
-            await GetWeathers();
+            _weathers = await GetWeathers();
         }
 
-        private async Task GetWeathers()
+        private async Task<ObservableCollection<WeatherWrapper>> GetWeathers()
         {
-            _weathers = new List<WeatherWrapper>();
             DateTime date = Meeting.DateFrom;
+            ObservableCollection<WeatherWrapper> weatherCollection = new ObservableCollection<WeatherWrapper>();
 
             do
             {
                 WeatherWrapper newWeather = new WeatherWrapper(await _APIClient.RunAsync(date));
-                _weathers.Add(newWeather);
+                weatherCollection.Add(newWeather);
                 date = date.AddDays(1);
             } while (date <= Meeting.DateTo);
+            return weatherCollection;
         }
 
         protected async override void OnDeleteExecute()
@@ -171,7 +176,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void InitializeMeeting(Meeting meeting)
         {
-            Meeting = new MeetingWrapper(meeting);
+            Meeting = new MeetingWrapper(meeting, _eventAggregator);
             Meeting.PropertyChanged += (s, e) =>
             {
                 if (!HasChanges)
@@ -250,6 +255,37 @@ namespace FriendOrganizer.UI.ViewModel
             {
                 _allFriends = await _meetingRepository.GetAllFriendsAsync();
                 SetupPicklist();
+            }
+        }
+
+        private async void AfterDateUpdate(AfterDateUpdateEventArgs args)
+        {
+            if (args.Id == Meeting.Id)
+            {
+                DateTime date = Meeting.DateFrom;
+                List<DateTime> dates = new List<DateTime>();
+                do
+                {
+                    dates.Add(date);
+                    date = date.AddDays(1);
+                } while (date <= Meeting.DateTo);
+
+                for (int i = 0; i<dates.Count; i++)
+                {
+                    if (!Weathers.Any(w => w.Date == dates[i]))
+                    {
+                        Weathers.Insert(i, new WeatherWrapper(await _APIClient.RunAsync(dates[i])));
+                    }
+                }
+
+                for (int i = 0; i < Weathers.Count; i++)
+                {
+                    if (!dates.Any(d => d == Weathers[i].Date))
+                    {
+                        Weathers.RemoveAt(i);
+                        i--;
+                    }
+                }
             }
         }
     }

@@ -24,5 +24,10 @@ namespace FriendOrganizer.UI.View
         {
             InitializeComponent();
         }
+
+        private void ItemsControl_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+            WeatherList.Items.Refresh();
+        }
     }
 }

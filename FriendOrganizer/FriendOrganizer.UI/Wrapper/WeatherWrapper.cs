@@ -17,6 +17,7 @@ namespace FriendOrganizer.UI.Wrapper
         public string weather_state_name { get { return Model.weather_state_name; } }
         public string weather_state_abbr { get { return Model.weather_state_abbr; } }
         public string applicable_date { get { return Model.applicable_date; } }
+        public DateTime Date { get { return DateTime.Parse(applicable_date); } }
         private double NumMin { get { return Math.Round((double)Model.min_temp, 1); } }
         private double NumMax { get { return Math.Round((double)Model.max_temp, 1); } }
         public string min_temp

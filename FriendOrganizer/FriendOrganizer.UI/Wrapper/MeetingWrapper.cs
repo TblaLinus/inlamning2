@@ -1,4 +1,7 @@
-﻿using FriendOrganizer.Model;
+﻿using FriendOrganizer.DataAccess;
+using FriendOrganizer.Model;
+using FriendOrganizer.UI.Event;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +12,11 @@ namespace FriendOrganizer.UI.Wrapper
 {
     public class MeetingWrapper : ModelWrapper<Meeting>
     {
-        public MeetingWrapper(Meeting model) : base(model)
+        protected readonly IEventAggregator EventAggregator;
+
+        public MeetingWrapper(Meeting model, IEventAggregator eventAggregator) : base(model)
         {
+            EventAggregator = eventAggregator;
         }
 
         public int Id { get { return Model.Id; } }
@@ -31,6 +37,7 @@ namespace FriendOrganizer.UI.Wrapper
                 {
                     DateTo = DateFrom;
                 }
+                EventAggregator.GetEvent<AfterDateUpdateEvent>().Publish(new AfterDateUpdateEventArgs { Id= Id});
             }
         }
 
@@ -44,6 +51,7 @@ namespace FriendOrganizer.UI.Wrapper
                 {
                     DateFrom = DateTo;
                 }
+                EventAggregator.GetEvent<AfterDateUpdateEvent>().Publish(new AfterDateUpdateEventArgs { Id = Id });
             }
         }
     }

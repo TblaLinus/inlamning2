@@ -33,7 +33,9 @@
         <Label Grid.Row="6" Content="Weather" Margin="10 0"/>
 
         <ScrollViewer Grid.Row="7" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-            <ItemsControl HorizontalAlignment="Left" ItemsSource="{Binding Weathers}" MaxHeight="100">
+            <ItemsControl Name="WeatherList" HorizontalAlignment="Left" MaxHeight="120"
+                          ItemsSource="{Binding Weathers, UpdateSourceTrigger=PropertyChanged}"
+                          SourceUpdated="ItemsControl_SourceUpdated">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
