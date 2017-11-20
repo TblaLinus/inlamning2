@@ -31,32 +31,43 @@
         <toolkit:DateTimePicker Grid.Row="5" Value="{Binding Meeting.DateTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="6" Content="Weather" Margin="10 0"/>
-        <Grid Grid.Row="7" Width="100">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding Weathers[0].applicable_date}" 
-                   FontSize="14" HorizontalAlignment="Center"/>
-            
-            <Image Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="30"
-                   Source="{Binding Weathers[0].ImageUrl}"/>
-            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Weathers[0].weather_state_name}" 
-                       FontSize="12" HorizontalAlignment="Center"/>
-            <Label Grid.Row="3" Grid.Column="0" Content="Min" FontSize="10" HorizontalAlignment="Center"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="Max" FontSize="10" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Weathers[0].min_temp}" 
-                       FontSize="14" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Weathers[0].max_temp}" 
-                       FontSize="14" HorizontalAlignment="Center"/>
-        </Grid>
+        <ItemsControl Grid.Row="7" HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                  ItemsSource="{Binding Weathers}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="100">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding applicable_date}" 
+                               FontSize="14" HorizontalAlignment="Center"/>
+                        <Image Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="30"
+                               Source="{Binding ImageUrl}"/>
+                        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding weather_state_name}" 
+                                   FontSize="12" HorizontalAlignment="Center"/>
+                        <Label Grid.Row="3" Grid.Column="0" Content="Min" FontSize="10" HorizontalAlignment="Center"/>
+                        <Label Grid.Row="3" Grid.Column="1" Content="Max" FontSize="10" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding min_temp}" 
+                                   FontSize="14" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding max_temp}" 
+                                   FontSize="14" HorizontalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
 
         <Grid Grid.Row="8">
